@@ -40,7 +40,9 @@ h1,h2,h3{font-family:var(--f-display);font-stretch:118%;line-height:1.05;margin:
 h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:850}
 h3{font-size:1.15rem;font-weight:750;font-stretch:112%}
 p{margin:0}
-.eyebrow{font-family:var(--f-body);font-weight:700;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink-deep)}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-body);font-weight:700;font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--pink-deep)}
+.eyebrow::before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:var(--pink);box-shadow:0 0 0 4px rgba(255,45,120,.1),0 0 12px rgba(255,45,120,.45);animation:eyebrowGlow 2s ease-in-out infinite}
+@keyframes eyebrowGlow{0%,100%{opacity:.75;transform:scale(.92);box-shadow:0 0 0 3px rgba(255,45,120,.08),0 0 8px rgba(255,45,120,.3)}50%{opacity:1;transform:scale(1.08);box-shadow:0 0 0 5px rgba(255,45,120,.12),0 0 16px rgba(255,45,120,.55)}}
 .lede{color:var(--muted);font-size:1.08rem;max-width:58ch}
 .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:.98rem;padding:.85em 1.4em;border-radius:999px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:var(--f-body);transition:transform .15s ease,background .15s ease}
 .btn:hover{transform:translateY(-2px)}
@@ -62,6 +64,8 @@ header.nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min
 .nav ul a{text-decoration:none;color:var(--muted);transition:color .2s ease}
 .nav ul a:hover{color:var(--pink-deep)}
 .nav .btn{padding:.6em 1.1em;font-size:.9rem}
+.nav .brochure-btn{display:inline-flex;align-items:center;justify-content:center;background:transparent;border:2px solid var(--pink);color:var(--pink);border-radius:10px;padding:.6em 1.1em;font:700 .9rem var(--f-body);line-height:1.6;text-decoration:none;white-space:nowrap;transition:background .2s ease,color .2s ease,transform .15s ease}
+.nav .brochure-btn:hover{background:var(--pink);color:#fff}
 .nav .active-indicator{position:absolute;left:0;top:0;width:0;height:3px;border-radius:999px;background:var(--pink);pointer-events:none;transform:translateX(0);transition:transform .3s ease-out,width .3s ease-out,top .3s ease-out}
 .nav-toggle{display:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;width:42px;height:42px;place-items:center;cursor:pointer}
 .nav-toggle svg{width:20px;height:20px}
@@ -74,16 +78,24 @@ section[id]{scroll-margin-top:108px}
   .nav ul a{display:block;padding:9px 4px}
   .nav-toggle{display:grid;margin-left:auto}
   .nav .btn{font-size:.82rem}
+  .nav .brochure-btn{font-size:.82rem;padding:.6em 1.1em}
   .nav .active-indicator{display:block}
 }
 @media (max-width:560px){
-  header.nav{top:14px;width:calc(100vw - 28px);height:68px;border-radius:22px}
-  .nav .wrap{gap:8px;padding-inline:14px}
+  header.nav{top:14px;width:calc(100vw - 28px);height:auto;min-height:68px;border-radius:22px}
+  .nav .wrap{gap:8px;padding:10px 14px;min-height:68px;height:auto}
   .brand{gap:7px}
   .brand img{height:25px}
   .brand b{font-size:.9rem}
   .nav .btn{padding:.55em .75em;font-size:.78rem}
+  .nav .brochure-btn{padding:.55em .75em;font-size:.78rem}
 }
+@media (prefers-reduced-motion:reduce){.eyebrow::before{animation:none}}
+
+.whatsapp-float{position:fixed;right:22px;bottom:22px;z-index:1001;width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:#25d366;color:#fff;box-shadow:0 8px 22px rgba(37,211,102,.28),0 0 0 5px rgba(37,211,102,.08);transition:transform .2s ease,box-shadow .2s ease}
+.whatsapp-float:hover{transform:scale(1.08);box-shadow:0 10px 26px rgba(37,211,102,.36),0 0 0 6px rgba(37,211,102,.1)}
+.whatsapp-float svg{width:27px;height:27px;fill:currentColor}
+@media (max-width:560px){.whatsapp-float{right:18px;bottom:18px;width:52px;height:52px}.whatsapp-float svg{width:27px;height:27px}}
 
 /* hero */
 .hero{
@@ -163,15 +175,16 @@ section[id]{scroll-margin-top:108px}
 }
 
 /* locations */
-.locations-section{position:relative;overflow:hidden;background:var(--bg)}
+.locations-section{position:relative;background:var(--bg)}
 .locations-section{padding-bottom:clamp(32px,5vw,64px)}
 .locations-pattern{position:absolute;inset:0;background:url("images/Gemini_Generated_Image_44gy1y44gy1y44gy.png") center/cover no-repeat;opacity:.15;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.75),#000 35%,rgba(0,0,0,.42));mask-image:linear-gradient(90deg,rgba(0,0,0,.75),#000 35%,rgba(0,0,0,.42))}
 .locations-section>.wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(320px,.38fr) 2px minmax(0,.62fr);gap:48px;align-items:start}
 .locations-section .sec-head{margin:0;padding-right:12px;max-width:none}
+.locations-section>.wrap>.sec-head{position:static}
 .locations-section .sec-head .lede{max-width:100%}
 .locations-support{display:grid;gap:14px;margin-top:18px;padding-right:12px;color:var(--muted);font-size:.94rem}
 .locations-support p{margin:0}
-.locations-divider{height:82%;min-height:440px;margin:0;background:var(--pink);opacity:.8;border-radius:999px}
+.locations-divider{height:auto;min-height:0;align-self:stretch;margin:0;background:var(--pink);opacity:.8;border-radius:999px}
 .locs{display:grid;gap:16px}
 .loc{position:relative;background:rgba(255,255,255,.76);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(220,210,215,.65);border-radius:16px;padding:22px 24px;display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:16px;row-gap:6px;align-items:start;isolation:isolate;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
 .loc::after{content:"";position:absolute;z-index:-1;left:9%;right:9%;bottom:-13px;height:24px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,45,120,.14),rgba(255,45,120,.05) 48%,transparent 74%);filter:blur(7px);opacity:.85;transition:opacity .25s ease,transform .25s ease}
@@ -187,9 +200,12 @@ section[id]{scroll-margin-top:108px}
   .locations-section .sec-head{margin:0;padding-right:8px}
   .loc{padding:18px}
 }
+@media (min-width:900px){
+  .locations-section>.wrap>.sec-head{position:sticky;top:150px;align-self:start}
+}
 @media (max-width:560px){
   .locations-section>.wrap{display:block}
-  .locations-section .sec-head{margin:0 0 32px;padding-right:0}
+  .locations-section .sec-head{position:static;margin:0 0 32px;padding-right:0}
   .locations-support{padding-right:0}
   .locations-divider{width:72px;height:2px;min-height:0;margin:0 0 24px}
   .locations-pattern{opacity:.1}
@@ -337,11 +353,15 @@ footer .brand b{color:var(--band-ink)}
     <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
+    <a class="brochure-btn" href="#contact" data-brochure-placeholder>Get Brochure</a>
     <a class="btn btn-pink" href="#contact">Get a callback</a>
   </div>
 </header>
 
 <main id="top">
+<a class="whatsapp-float" href="https://wa.me/917000040592" target="_blank" rel="noopener" aria-label="Chat with Miss Vendy on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.52 3.48A11.82 11.82 0 0 0 12.08 0C5.55 0 .24 5.31.24 11.84c0 2.09.55 4.13 1.59 5.93L.14 24l6.37-1.67a11.83 11.83 0 0 0 5.57 1.42h.01c6.53 0 11.84-5.31 11.84-11.84 0-3.16-1.23-6.13-3.41-8.43Zm-8.44 18.27h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.78.99 1.01-3.68-.23-.38a9.85 9.85 0 0 1-1.51-5.25C2.17 6.4 6.61 1.97 12.08 1.97c2.65 0 5.14 1.03 7.02 2.92a9.86 9.86 0 0 1 2.91 7.02c0 5.47-4.46 9.84-9.93 9.84Zm5.42-7.37c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.94 1.18-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.78-.73 2.03-1.44.25-.71.25-1.32.17-1.44-.07-.13-.27-.2-.57-.35Z"/></svg>
+</a>
 <section class="hero">
   <div class="hero-pattern" aria-hidden="true"></div>
   <div class="wrap">
